@@ -134,8 +134,11 @@ class CursesMenu(object):
         else:
             self._main_loop(None)
         CursesMenu.currently_active_menu = None
-        self.clear_screen()
-        clear_terminal()
+        if self.stdscr:
+            self.stdscr.clear()
+        else:
+            self.clear_screen()
+        os.system('clear')
         CursesMenu.currently_active_menu = self.previous_active_menu
 
     def start(self, show_exit_option=None):
@@ -350,6 +353,9 @@ class CursesMenu(object):
         """
         Clear the screen belonging to this menu
         """
+        if self.stdscr:
+            self.stdscr.clear()
+            self.stdscr.refresh()
         self.screen.clear()
 
 
